@@ -1,5 +1,6 @@
 from threading import Lock, Thread
 import urllib2
+import hashlib
 import pickle
 import time
 
@@ -46,10 +47,13 @@ def check_defacement(pagename, data):
     except:
         pass
 
-    if not known_page_hash[pagename]:
+    try:
+        if known_page_hash[pagename]:
+            pass
+    except KeyError:
         new_page_hash = md5(data)
-        save_checksum(pagename, new_page_hash)
-    
+        save_checksum(pagename, new_page_hash)         
+
     if md5(data) == known_page_hash[pagename]:
         return None
 
@@ -64,6 +68,7 @@ def save_checksum(filename, filehash):
     """Computes checksum of file, stores it in a dictionary and saves it to disk"""
     
     hash_dict[filename] = filehash
+    
     with open(hash_file, 'w') as f:
         #f.write(hashdict)
         pickle.dump(f, hash_dict)
@@ -74,10 +79,8 @@ def md5(data):
     """ returns a hash of the filename given in the argument"""
 
     file_hash = hashlib.sha1()
-    with open(filename, "rb") as f:
-        for block in iter(lambda: f.read(4096), b""): # this is premature optimisation. I am assuming that some files
-            file_hash.update(block)                   # will be too big to read all at once. but for webpages this is a bit 
-    return file_hash.hexdigest()                      # too much?
+    file_hash.update(data)
+    return file_hash.hexdigest()
 
 if __name__ == "__main__":
 
