@@ -38,8 +38,13 @@ def check_defacement(pagename, data):
      it computes a checksum again and compares it with the one stored on disk if they dont match. 
      Then possibly the webpage has been defaced."""
 
-    f = open(hash_file, 'r')
+    try:
+    f = file(hash_file, "rb")
     known_page_hash = pickle.load(f)
+    f.close()
+    except:
+        pass
+
     if not known_page_hash[pagename]:
         new_page_hash = md5(data)
         save_checksum(pagename, new_page_hash)
