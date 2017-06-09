@@ -28,15 +28,18 @@ def monitor(webpage=[]):
 
 def check_for_change(webpage):
     """ Gets the webpage and returns value of check_defacement"""
+
     page = urllib2.urlopen(webpage)
-    return check_defacement(webpage, page.read())
+    data = page.read()
+    return check_defacement(webpage, data)
 
 def check_defacement(pagename, data):
     """ Computes a checksum of the webpage and stores it, on subsequent calls
      it computes a checksum again and compares it with the one stored on disk if they dont match. 
      Then possibly the webpage has been defaced."""
 
-    known_page_hash = pickle.load(hash_file)
+    f = open(hash_file, 'r')
+    known_page_hash = pickle.load(f)
     if not known_page_hash[pagename]:
         new_page_hash = md5(data)
         save_checksum(pagename, new_page_hash)
@@ -55,7 +58,7 @@ def save_checksum(filename, filehash):
     """Computes checksum of file, stores it in a dictionary and saves it to disk"""
     
     hash_dict[filename] = filehash
-    with open(hash_file) as f:
+    with open(hash_file, 'w') as f:
         #f.write(hashdict)
         pickle.dump(f, hash_dict)
 
