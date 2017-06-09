@@ -12,6 +12,7 @@ def log(msg):
 	with file_lock:
 		open(changesf, 'w') as f:
 			f.write(msg)
+    return None
 
 def monitor(webpage):
 	""" Monitor the website, if there is a change log it to disk"""
