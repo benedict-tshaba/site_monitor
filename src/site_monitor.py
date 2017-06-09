@@ -88,5 +88,4 @@ if __name__ == "__main__":
     for webpage in webpages:
         checker = Thread(target=monitor, args=[webpage,])
         checker.start()
-    
     checker.join()
