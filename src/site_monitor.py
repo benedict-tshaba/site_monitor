@@ -14,17 +14,19 @@ changes_file = "logs/website_changes.log"
 
 def log(msg):
     with file_lock:
-        with open(changes_file, 'w') as f:
+        with open(changes_file, 'a') as f:
             f.write(msg)
     return None
 
 def monitor(webpage=[]):
     """ Monitor the website, if there is a change log it to disk"""
 
-    while True:
-        changes = check_for_change(webpage)
-        if changes:
-            log(changes)
+    changes = check_for_change(webpage)
+    if changes:
+        log(changes)
+
+    log("Date: "+time.asctime()+" Webpage "+webpage+"has not changed since last check.\n")
+        
     return None
 
 def check_for_change(webpage):
@@ -88,4 +90,4 @@ if __name__ == "__main__":
     for webpage in webpages:
         checker = Thread(target=monitor, args=[webpage,])
         checker.start()
-    checker.join()
+        checker.join()
