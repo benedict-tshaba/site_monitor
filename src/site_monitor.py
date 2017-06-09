@@ -3,6 +3,9 @@ import urllib2
 import pickle
 import time
 
+__version__ = "0.0.1"
+__author__ = "Tshaba Phomolo Benedict"
+
 file_lock = Lock()
 hash_dict = {}
 hash_file = "logs/hashes.txt"
