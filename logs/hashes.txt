@@ -1,0 +1,14 @@
+(dp0
+S'http://benedict.heliohost.org/services.html'
+p1
+S'aa31a82923e9078f58597e7c28178e98685c378f'
+p2
+sS'http://benedict.heliohost.org/about.html'
+p3
+S'8ced0eb60fcd148f2f1e9e8582877611e670d6c0'
+p4
+sS'http://benedict.heliohost.org/index.html'
+p5
+S'72957ce8ccd2abf9f64cf5c8d0a875ea114af6d5'
+p6
+s.

@@ -49,15 +49,13 @@ def check_defacement(pagename, data):
 
     try:
         if known_page_hash[pagename]:
-            pass
+            return None
+
     except KeyError:
         new_page_hash = md5(data)
         save_checksum(pagename, new_page_hash)         
 
-    if md5(data) == known_page_hash[pagename]:
-        return None
-
-    if md5(data) != known_page_hash(pagename):
+    if md5(data) != known_page_hash[pagename]:
         msg = "Date: {0}".format(time.asctime())
         msg += "\nThe following "+webpage+" might have been maliciosly modified"
         msg += "\nPlease verify and restore from backup"
@@ -68,10 +66,10 @@ def save_checksum(filename, filehash):
     """Computes checksum of file, stores it in a dictionary and saves it to disk"""
     
     hash_dict[filename] = filehash
-    
+
     with open(hash_file, 'w') as f:
         #f.write(hashdict)
-        pickle.dump(f, hash_dict)
+        pickle.dump(hash_dict, f)
 
     return None
 
