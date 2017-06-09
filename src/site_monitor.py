@@ -1,4 +1,5 @@
 from threading import Lock, Thread
+import urllib2
 import pickle
 import time
 
@@ -21,14 +22,18 @@ def monitor(webpage):
 			log(changes)
     return None
 
-def check_defacement(webpage):
+def check_for_change(webpage):
+    page = urllib.urlopen(webpage)
+    return check_defacement(webpage, page.read())
+
+def check_defacement(pagename,data):
 	""" Computes a checksum of the webpage and stores it, on subsequent calls it computes a checksum again and compares it with the one stored on disk if they dont match. Then Possibly the wepage has been defaced."""
     pagehash = picle.load(hashfile)
-    if not pagehash[webpage]:
-        page = md5(webpage)
-        save_checksum(webpage, page)
+    if not pagehash[pagename]:
+        thispagehash = md5(data)
+        save_checksum(pagename, thispagehash)
     
-    if md5(webpage) == pagehash[webpage]:
+    if md5(data) == pagehash[pagename]:
         return None
 
     else:
@@ -36,7 +41,7 @@ def check_defacement(webpage):
         msg .= "\nThe following ".webpage." might have been maliciosly modified"
         msg .= "\nPlease verify and restore from backup"
     
-	return None
+	return msg
 
 def save_checksum(filename, filehash):
     hashdict[filename] = filehash
