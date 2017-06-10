@@ -14,7 +14,7 @@ changes_file = "logs/website_changes.log"
 
 def log(msg):
     with file_lock:
-        with open(changes_file, 'a') as f:
+        with open(changes_file, 'w+') as f:
             f.write(msg)
     return None
 
@@ -25,8 +25,8 @@ def monitor(webpage=[]):
     if changes:
         log(changes)
 
-    log("Date: "+time.asctime()+" Webpage "+webpage+"has not changed since last check.\n")
-        
+    log("Date: "+time.asctime()+" \nWebpage: "+webpage+" has not changed since last check.\n")
+
     return None
 
 def check_for_change(webpage):
@@ -55,18 +55,18 @@ def check_defacement(pagename, data):
 
     except KeyError:
         new_page_hash = md5(data)
-        save_checksum(pagename, new_page_hash)         
+        save_checksum(pagename, new_page_hash)
 
     if md5(data) != known_page_hash[pagename]:
         msg = "Date: {0}".format(time.asctime())
         msg += "\nThe following "+webpage+" might have been maliciosly modified"
-        msg += "\nPlease verify and restore from backup"
-    
+        msg += " - Please verify and restore from backup"
+
     return msg
 
 def save_checksum(filename, filehash):
     """Computes checksum of file, stores it in a dictionary and saves it to disk"""
-    
+
     hash_dict[filename] = filehash
 
     with open(hash_file, 'w') as f:
@@ -76,7 +76,7 @@ def save_checksum(filename, filehash):
     return None
 
 def md5(data):
-    """ returns a hash of the filename given in the argument"""
+    """ returns a hash of the file contents given in the argument"""
 
     file_hash = hashlib.sha1()
     file_hash.update(data)
@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
     webpages = ['http://benedict.heliohost.org/index.html', 'http://benedict.heliohost.org/about.html'
     , 'http://benedict.heliohost.org/services.html', ]
-    
+
     for webpage in webpages:
         checker = Thread(target=monitor, args=[webpage,])
         checker.start()
