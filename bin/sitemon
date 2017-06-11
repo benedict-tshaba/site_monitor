@@ -13,8 +13,7 @@ logs = config.get('Files', 'changes_file')
 
 if __name__ == "__main__":
 
-    webpages = ['http://benedict.heliohost.org/index.html', 'http://benedict.heliohost.org/about.html'
-    , 'http://benedict.heliohost.org/services.html', ]
+    webpages = config.get('WEBPAGES', 'webpages').split(',')
 
     for webpage in webpages:
         checker = Thread(target=monitor, args=([webpage,], hashes, logs))
