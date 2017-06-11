@@ -1,6 +1,7 @@
 # site_monitor #
 
-## Tshaba Phomolo Benedict benedicttshaba[at]gmail.com ##
+## Tshaba Phomolo Benedict ##
+### Email: benedicttshaba[at]gmail.com ###
 
 A Python script that monitors webpages for any defacements.
 It does this by first computing checksums of your webpages on first deployment and then subsequently, 
