@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from src.lib.site_monitor_lib import SiteMon
 import time
 import unittest

@@ -1,6 +1,8 @@
+#!/usr/bin/python
+
 from lib.site_monitor_lib import SiteMon
 
-__version__ = "0.6.3"
+__version__ = "1.0.0"
 __author__ = "Tshaba Phomolo Benedict"
 
 def monitor(webpage, hash_file, changes_file):
