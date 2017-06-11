@@ -1,36 +1,20 @@
-import sys
-from os import path
-sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
-from ..src.site_monitor import monitor, md5
+from src.site_monitor_lib import SiteMon
 import unittest
 
 class SiteMonitorTestCase(unittest.TestCase):
+	sm = SiteMon("logs/hashes.txt", "logs/website_changes.log")
 
-    def test_check_for_change(self):
-        pass
-
-    def test_md5(self):
-        with open('test_data/index.html', 'r') as f:
+    def test_hasher(self):
+        with open('tests/test_data/index.html', 'r') as f:
 		data = f.read()
-	self.assertEqual(md5(data), "72957ce8ccd2abf9f64cf5c8d0a875ea114af6d5")
-
-    def test_check_defacement(self):
-        pass
+	self.assertEqual(sm.hasher(data), "d6ce37718229eaac245a11764d5f4850cca2ec52")
 
     def test_log(self):
-        pass
-
-    def test_save_checksum(self):
-        pass
-
+	msg = " -- Test message check -- \n"
+	sm.log(msg)
+        with open('logs/website_changes.log', 'r') as f:
+		file_msg = f.readline()
+	self.assertEqual(msg, file_msg)
 
 if __name__ == '__main__':
-    if __package__ is None:
-        import sys
-        from os import path
-        sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
-        from src.site_monitor import monitor
-    else:
-        from ..src.site_monitor import monitor
-
     unittest.main()
