@@ -10,7 +10,7 @@ with open('LICENSE') as f:
 
 setup(name='sitemon',
       scripts=['bin/sitemon'],
-      version='1.0.5',
+      version='1.0.6',
       description='A website monitoring program',
       long_description=readme,
       author='Tshaba Phomolo Benedict',
