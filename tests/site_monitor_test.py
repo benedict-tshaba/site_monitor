@@ -20,5 +20,11 @@ class SiteMonitorTestCase(unittest.TestCase):
 			log_msg = f.readline()
 			self.assertEqual("Date: "+time.asctime()+msg, log_msg) # the log was written
 
+	def test_show_report(self):
+		result = sm.show_report()
+		with open('logs/website_changes.log', 'r') as f:
+			logs = f.read()
+			self.assertEqual(result, logs)
+
 if __name__ == '__main__':
 	unittest.main()

@@ -4,7 +4,7 @@ from distutils.core import setup
 
 setup(name='sitemon',
       scripts=['bin/sitemon'],
-      version='1.0.0',
+      version='1.0.3',
       description='A website monitoring program',
       author='Tshaba Phomolo Benedict',
       author_email='benedicttshaba@gmail.com',

@@ -2,7 +2,6 @@
 
 from lib.site_monitor_lib import SiteMon
 
-__version__ = "1.0.0"
 __author__ = "Tshaba Phomolo Benedict"
 
 def monitor(webpage, hash_file, changes_file):
@@ -13,6 +12,7 @@ def monitor(webpage, hash_file, changes_file):
     changes = check_for_change(webpage, sm)
     if changes:
         sm.log(changes)
+	sm.show_report()
 
     sm.log("\nWebpage: "+webpage+" has not changed since last check.\n")
 
