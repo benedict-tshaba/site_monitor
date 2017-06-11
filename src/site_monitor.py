@@ -3,7 +3,7 @@ from lib.site_monitor_lib import SiteMon
 __version__ = "0.6.3"
 __author__ = "Tshaba Phomolo Benedict"
 
-def monitor(webpage=[], **kwargs):
+def monitor(webpage, hash_file, changes_file):
     """ Monitor the website, if there is a change log it to disk"""
 
     sm = SiteMon(hash_file, changes_file)

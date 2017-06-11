@@ -15,6 +15,6 @@ if __name__ == "__main__":
     , 'http://benedict.heliohost.org/services.html', ]
 
     for webpage in webpages:
-        checker = Thread(target=monitor, args=[webpage,], hash_file=hashes, changes_file=logs)
+        checker = Thread(target=monitor, args=([webpage,], hashes, logs))
         checker.start()
         checker.join()
