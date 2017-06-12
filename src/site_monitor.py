@@ -12,7 +12,7 @@ def monitor(webpage, hash_file, changes_file):
     changes = check_for_change(webpage, sm)
     if changes:
         sm.log(changes)
-	print sm.show_report()
+    print sm.show_report()
 
     sm.log("\nWebpage: "+webpage+" has not changed since last check.\n")
 
@@ -21,9 +21,9 @@ def monitor(webpage, hash_file, changes_file):
 def check_for_change(webpage, sm):
     """ Gets the webpage and returns value of check_defacement"""
 
-    page = sm.check_availability(webpage)
+    page, err = sm.check_availability(webpage)
     if page is None:
-        print "Error opening: ", webpage
+        print page
         exit(-1)
 
     data = page.read()
