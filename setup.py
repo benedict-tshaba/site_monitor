@@ -16,7 +16,7 @@ setup(name='sitemon',
       author='Tshaba Phomolo Benedict',
       author_email='benedicttshaba@gmail.com',
       url='http://www.benedict.heliohost.org/',
-      packages=['src','src/lib'],
+      packages=['src','lib'],
       include_package_data = True,
       license = license,
      )
