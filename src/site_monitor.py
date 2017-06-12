@@ -23,7 +23,7 @@ def check_for_change(webpage, sm):
 
     page, err = sm.check_availability(webpage)
     if page is None:
-        print page
+        print err
         exit(-1)
 
     data = page.read()
