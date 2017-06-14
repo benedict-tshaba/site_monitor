@@ -58,22 +58,21 @@ class SiteMon(object):
 			f = file(self.hash_file, "rb")
 			known_page_hash = pickle.load(f)
 			f.close()
-		except:
-			pass
+		except: # I should probably handle this exception, but its usually caused by the file not existing.
+			return None #This means we wont log anything, perhaps I should change it later.
 
 		try:
-			if known_page_hash[pagename]:
-				return None
+			if pagename in known_page_hash:
+				if self.hasher(data) != known_page_hash[pagename]:
+					msg = "\nThe following "+webpage+" might have been maliciosly modified"
+					msg += " - Please verify and restore from backup"
+					return msg
 
-		except KeyError:
+		except KeyError: #the page hash is not in our database
 			new_page_hash = self.hasher(data)
 			self.save_checksum(pagename, new_page_hash)
-
-		if self.hasher(data) != known_page_hash[pagename]:
-			msg = "\nThe following "+webpage+" might have been maliciosly modified"
-			msg += " - Please verify and restore from backup"
-
-		return msg
+			msg = "The page was not in the database, but has since been added"
+			return msg
 
 	def check_availability(self, webpage):
 		"""returns a webpage discriptor if page is accessibly, None otherwise"""
