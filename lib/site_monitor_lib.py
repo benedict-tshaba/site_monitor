@@ -17,8 +17,7 @@ class SiteMon(object):
 	# logging changes to disk 
 	def log(self, msg):
 		""" Writes logs to disk, log messages passed (msg) should be in the following format:
-		The must be preceeded by a newline character and followed by another newline:
-		e.g: 'This is my log message'\n """
+		They must be succeeded by a newline character: e.g: 'This is my log message\n' """
 
 		time_stamp = "Date: "+time.asctime()
 		with file_lock:
