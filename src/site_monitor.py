@@ -27,5 +27,10 @@ def check_for_change(webpage, sm):
         print err
         exit(-1)
 
-    data = page.read()
-    return sm.check_defacement(webpage, data)
+    if webpage[-4:] == "html" or webpage[-3] == "php":
+        data = page.read()
+        return sm.check_defacement(webpage, data)
+    
+    else:
+        data = page.read()
+        return sm.watch_files(webpage, data)
