@@ -37,16 +37,17 @@ class SiteMon(object):
 		"""Computes checksum of file, stores it in a dictionary and saves it to disk"""
 
 		self.hash_dict[filename] = filehash
-
-		with open(self.hash_file, 'a') as f:
-			pickle.dump(self.hash_dict, f)
+                with file_lock: #prevent all threads from raping the hash database
+	        	with open(self.hash_file, 'a+') as f:
+		        	pickle.dump(self.hash_dict, f)
 
 		return None
 
 	def show_report(self):
 		"""returns the contents of the log file"""
-		with open(self.changes_file) as f:
-			return f.read()
+                with file_lock: #to maintain consistency
+		         with open(self.changes_file) as f:
+		        	return f.read()
 
 	# functions for checking the state of my website follow bellow
 	def check_defacement(self, pagename, data):
