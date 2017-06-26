@@ -12,9 +12,10 @@ def monitor(webpage, hash_file, changes_file):
     changes = check_for_change(webpage, sm)
     if changes:
         sm.log(changes)
-    print sm.show_report()
-
-    sm.log("\nWebpage: "+webpage+" has not changed since last check.\n")
+        print sm.show_report()
+    
+    else:
+        sm.log("\nWebpage: "+webpage+" has not changed since last check.\n")
 
     return None
 
