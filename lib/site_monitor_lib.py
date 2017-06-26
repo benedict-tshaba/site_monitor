@@ -57,9 +57,9 @@ class SiteMon(object):
 			f = file(self.hash_file, "rb")
 			known_page_hash = pickle.load(f)
 			f.close()
-		except: 
+		except EOFError: 
 			msg = " - Unable to open the hash database"
-			return msg
+			pass
 
 		try:
 			if self.hasher(data) != known_page_hash[pagename]:
