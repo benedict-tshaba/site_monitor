@@ -5,7 +5,7 @@ import time
 import unittest
 import pickle
 
-sm = SiteMon("logs/hashes.txt", "logs/website_changes.log")
+sm = SiteMon("logs/hashes.db", "logs/website_changes.log")
 
 class SiteMonitorTestCase(unittest.TestCase):
 
@@ -32,7 +32,7 @@ class SiteMonitorTestCase(unittest.TestCase):
 			data = f.read()
 			hash1 = sm.hasher(data)
 			sm.save_checksum('tests/test_data/index.html', hash1)
-		fs = file('logs/hashes.txt', "rb")
+		fs = file('logs/hashes.db', "rb")
 		hash2 = pickle.load(fs)
 		self.assertEqual(hash2['tests/test_data/index.html'], hash1)
 
