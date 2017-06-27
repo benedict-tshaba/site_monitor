@@ -23,7 +23,7 @@ class SiteMon(object):
 		time_stamp = "Date: "+time.asctime()
 		with file_lock:
 			with open(self.changes_file, 'a+') as f:
-				f.write(time_stamp+msg)
+				f.write(time_stamp+msg+"\n")
 		return None
 
 	def hasher(self, data):
