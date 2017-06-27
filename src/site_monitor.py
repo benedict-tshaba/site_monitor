@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import logging
 from lib.site_monitor_lib import SiteMon
 
 __author__ = "Tshaba Phomolo Benedict"
@@ -8,14 +9,17 @@ def monitor(webpage, hash_file, changes_file):
     """ Monitor the website, if there is a change log it to disk"""
 
     sm = SiteMon(hash_file, changes_file)
+    logging.basicConfig(filename=changes_file, level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%Y/%m/%d %I:%M:%S %p')
 
     changes = check_for_change(webpage, sm)
     if changes:
-        sm.log(changes)
+        logging.debug(changes)
+        #sm.log(changes)
         print sm.show_report()
     
     else:
-        sm.log("\nFile: "+webpage+" has not changed since last check.\n")
+        logging.debug(" - File: "+webpage+" has not changed since last check")
+        #sm.log("\nFile: "+webpage+" has not changed since last check.\n")
 
     return None
 
