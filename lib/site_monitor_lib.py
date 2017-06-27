@@ -21,10 +21,9 @@ class SiteMon(object):
 		They must be succeeded by a newline character: e.g: 'This is my log message\n' """
 
 		time_stamp = "Date: "+time.asctime()
-		with file_lock.acquire():
+		with file_lock:
 			with open(self.changes_file, 'a+') as f:
 				f.write(time_stamp+msg+"\n")
-                file_lock.release()
 		return None
 
 	def hasher(self, data):
@@ -38,18 +37,16 @@ class SiteMon(object):
 		"""Computes checksum of file, stores it in a dictionary and saves it to disk"""
 
 		self.hash_dict[filename] = filehash
-                with file_lock.acquire():
+                with file_lock:
 	        	with open(self.hash_file, 'a+') as f:
 		        	pickle.dump(self.hash_dict, f)
-                file_lock.release()
 		return None
 
 	def show_report(self):
 		"""returns the contents of the log file"""
-                with file_lock.acquire():
+                with file_lock:
 		         with open(self.changes_file) as f:
 		        	result = f.read()
-                                file_lock.release()
                                 return result
 
 	# functions for checking the state of my website follow bellow
