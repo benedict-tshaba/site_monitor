@@ -15,7 +15,8 @@ if __name__ == "__main__":
 
     webpages = config.get('WEBPAGES', 'webpages').split(',')
 
-    for webpage in webpages:
-        checker = Thread(target=monitor, args=(webpage, hashes, logs))
+    checkers = [Thread(target=monitor, args=(webpage, hashes, logs,)) for webpage in webpages]
+    for checker in checkers:
         checker.start()
+    for checker in checkers:
         checker.join()
