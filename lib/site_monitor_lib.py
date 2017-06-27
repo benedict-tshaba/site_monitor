@@ -50,7 +50,7 @@ class SiteMon(object):
 		        	return f.read()
 
 	# functions for checking the state of my website follow bellow
-	def check_defacement(self, pagename, data):
+	def check_defacement(self, pagename, data, mode):
 		"""returns a message to be logged if there has been a change in pagename's data since last check"""
 
 		known_page_hash = {}
@@ -64,17 +64,32 @@ class SiteMon(object):
 
 		try:
 			if self.hasher(data) != known_page_hash[pagename]:
-				msg = "\nThe following "+webpage+" might have been maliciosly modified"
-				msg += " - Please verify and restore from backup"
-				return msg
+                            if mode == 'txt':
+                                return self.watch_webs(pagename)
+                            if mode == 'bin':
+                                return self.watch_files(pagename)
 
 		except KeyError: #the page hash is not in our database
 			new_page_hash = self.hasher(data)
 			self.save_checksum(pagename, new_page_hash)
-			msg = " - The page was not in the database, but has since been added"
+			msg = " - The file was not in the database, but has since been added"
 			return msg
 
 		return None
+
+        def watch_files(self, page):
+            """ Monitors files hosted online"""
+            filename = page.split('/')[-1]
+            location = page.split('/')[-2]
+            msg = "\n The following file "+filename+" from "+location+" may have been maliciosly modified"
+            msg += " - Please verify and take appropriate measures"
+            return msg
+
+        def watch_webs(self, page):
+            """ Monitors webpages"""
+	    msg = "\nThe following "+page+" might have been maliciosly modified"
+            msg += " - Please verify and restore from backup"
+            return msg
 
 	def check_availability(self, webpage):
 		"""returns a webpage discriptor if page is accessibly, None otherwise"""
