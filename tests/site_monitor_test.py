@@ -5,7 +5,7 @@ import time
 import unittest
 import pickle
 
-sm = SiteMon("logs/hashes.db", "logs/website_changes.log")
+sm = SiteMon("logs/hashes.db", "logs/website_changes.log", None)
 
 class SiteMonitorTestCase(unittest.TestCase):
 
