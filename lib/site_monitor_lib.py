@@ -9,11 +9,11 @@ import time
 file_lock = Lock()
 
 class SiteMon(object):
-	def __init__(self, hash_file, changes_file):
+	def __init__(self, hash_file, changes_file, queue):
 		self.hash_file = hash_file
 		self.changes_file = changes_file
 		self.hash_dict = {}
-
+                self.queue = queue
 
 	# logs changes to disk 
 	def log(self, msg):
@@ -71,7 +71,9 @@ class SiteMon(object):
 
 		except KeyError: #the page hash is not in our database
 			new_page_hash = self.hasher(data)
-			self.save_checksum(pagename, new_page_hash)
+                        known_page_hash[pagename] = new_page_hash
+                        self.queue.put(known_page_hash)
+			#self.save_checksum(pagename, new_page_hash)
 			msg = " - The file was not in the database, but has since been added"
 			return msg
 
