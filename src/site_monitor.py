@@ -15,7 +15,7 @@ def monitor(webpage, hash_file, changes_file):
         print sm.show_report()
     
     else:
-        sm.log("\nWebpage: "+webpage+" has not changed since last check.\n")
+        sm.log("\nFile: "+webpage+" has not changed since last check.\n")
 
     return None
 
