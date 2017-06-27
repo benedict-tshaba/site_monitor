@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 import logging
+from Queue import Queue
+import pickle
 from lib.site_monitor_lib import SiteMon
 
 __author__ = "Tshaba Phomolo Benedict"
@@ -8,7 +10,8 @@ __author__ = "Tshaba Phomolo Benedict"
 def monitor(webpage, hash_file, changes_file):
     """ Monitor the website, if there is a change log it to disk"""
 
-    sm = SiteMon(hash_file, changes_file)
+    queue = Queue() #this solves the duplicates issue
+    sm = SiteMon(hash_file, changes_file, queue)
     logging.basicConfig(filename=changes_file, level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%Y/%m/%d %I:%M:%S %p')
 
     changes = check_for_change(webpage, sm)
@@ -20,6 +23,10 @@ def monitor(webpage, hash_file, changes_file):
     else:
         logging.debug(" - File: "+webpage+" has not changed since last check")
         #sm.log("\nFile: "+webpage+" has not changed since last check.\n")
+
+    while not queue.empty():
+        with open(hash_file, 'w') as f:
+            pickle.dump(queue.get(), f)
 
     return None
 
