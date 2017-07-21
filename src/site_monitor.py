@@ -3,7 +3,7 @@
 import logging
 from Queue import Queue
 import pickle
-from site_monitor_lib import SiteMon
+from .site_monitor_lib import SiteMon
 
 __author__ = "Tshaba Phomolo Benedict"
 
